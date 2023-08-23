@@ -4,20 +4,20 @@ from ..models.customer_model import Customers
 
 class CustomersController:
 
-#Ejercicio 1
+#Ejercicio 1.1
     @classmethod
     def show_customer(cls, customer_id):
         results = Customers.show_customer(customer_id)
         return results
 
-#Ejercicio 2
+#Ejercicio 1.2
     @classmethod
     def show_customers(cls, state = None):
         state_filter = request.args.get('state')
         results = Customers.show_customers(state_filter)
         return results
 
-#Ejercicio 3
+#Ejercicio 1.3
     @classmethod
     def create_customer(cls):
         customer = Customers(
@@ -33,7 +33,7 @@ class CustomersController:
             )
         return Customers.creat_customer(customer)
 
-#Ejercicio 4
+#Ejercicio 1.4
     @classmethod
     def update_customer(cls, customer_id):
         customer = Customers(
@@ -50,6 +50,8 @@ class CustomersController:
                 
         return Customers.update_customer(customer_id, customer)
 
+#Ejercicio 1.5
+    @classmethod    
     def delete_customer(cls, customer_id):
-        results =Customers.delete_customer(customer_id)
+        results = Customers.delete_customer(customer_id)
         return results
