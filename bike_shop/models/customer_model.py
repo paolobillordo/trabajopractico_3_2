@@ -22,18 +22,8 @@ class Customers:
         
         if results:
             customer = Customers(results[0],results[1],results[2],results[3],results[4],results[5],results[6],results[7],results[8])
-            return jsonify(customer.__dict__)
-            # return {
-            #     'customer_id': results[0],
-            #     'first_name': results[1],
-            #     'last_name': results[2],
-            #     'phone': results[3],
-            #     'email': results[4],
-            #     'street': results[5],
-            #     'city': results[6],
-            #     'state': results[7],
-            #     'zip_code': results[8]
-            # }, 200        
+            return jsonify(customer.__dict__), 200
+                   
         return jsonify({"error": "Customer not found"}), 404
 
 #Ejercicio 1.2

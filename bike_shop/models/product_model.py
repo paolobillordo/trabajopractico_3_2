@@ -90,3 +90,32 @@ class Product:
         query = "INSERT INTO products (product_name, brand_id, category_id, model_year, list_price) VALUES (%s,%s,%s,%s,%s)"
         DatabaseConnection.execute_query('production', query, params)
         return jsonify({'mensaje': 'Producto creado con éxito'}), 201
+    
+#Ejercicio 2.4
+    @classmethod
+    def update_product(cls, product_id, product):
+        dict = product.__dict__
+        campos = []
+        params = []
+        for clave in dict:                                        
+            if dict[clave] != "" and dict[clave] != 0:
+                params.append(dict[clave])
+                campos.append(clave + " = %s")
+        campos_str = ", ".join(campos)
+        params.append(product_id)                
+        query = f"UPDATE products SET {campos_str} WHERE product_id = %s"
+        if campos:
+            DatabaseConnection.execute_query('production', query, params)
+            return jsonify({"mensaje": "Producto modificado"}), 200
+        return jsonify({"mensaje": "No hay campos para modificar"}), 400
+    
+#Ejercicio 2.5
+    @classmethod
+    def delete_product(cls, product_id):
+        query = "DELETE FROM products WHERE product_id = %s;"
+        params = product_id,
+        result = DatabaseConnection.execute_query('production', query, params)        
+        if result:
+            return jsonify({"mensaje": "Producto eliminado con éxito"}), 204
+        
+        return jsonify({"error": "Product not found"}), 404
