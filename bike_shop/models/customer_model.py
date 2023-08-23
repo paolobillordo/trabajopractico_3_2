@@ -68,60 +68,22 @@ class Customers:
 #Ejercicio 1.4
     @classmethod
     def update_customer(cls, customer_id, customer):        
-        obj = customer.__dict__
-        for clave in obj:                                        
-            if obj[clave] != "":
-                params = (obj[clave], customer_id)
-                query = "UPDATE customers SET " + clave + "=%s WHERE customer_id = %s"
-                DatabaseConnection.execute_query("sales", query, params)
-        return jsonify({"mensaje": "Customer modificado"}), 200
+        dict = customer.__dict__
+        campos = []
+        params = []
+        for clave in dict:                                        
+            if dict[clave] != "":
+                params.append(dict[clave])
+                campos.append(clave + " = %s")
+        campos_str = ", ".join(campos)
+        params.append(customer_id)                
+        query = f"UPDATE customers SET {campos_str} WHERE customer_id = %s"
+        if campos:
+            DatabaseConnection.execute_query("sales", query, params)
+            return jsonify({"mensaje": "Customer modificado"}), 200
+        return jsonify({"mensaje": "No hay campos para modificar"}), 400
 
-        # if customer.first_name !=  "":
-        #     params = (customer.first_name, customer_id)
-        #     query = "UPDATE customers SET first_name=%s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.last_name !=  "":
-        #     params = (customer.last_name, customer_id)
-        #     query = "UPDATE customers SET last_name = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.phone !=  "":
-        #     params = (customer.phone, customer_id)
-        #     query = "UPDATE customers SET phone = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.email !=  "":
-        #     params = (customer.phone, customer_id)
-        #     query = "UPDATE customers SET email = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.street !=  "":
-        #     params = (customer.street, customer_id)
-        #     query = "UPDATE customers SET street = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.city !=  "":
-        #     params = (customer.city, customer_id)
-        #     query = "UPDATE customers SET city = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.state !=  "":
-        #     params = (customer.state, customer_id)
-        #     query = "UPDATE customers SET state = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # if customer.zip_code !=  "":
-        #     params = (customer.zip_code, customer_id)
-        #     query = "UPDATE customers SET zip_code = %s WHERE customer_id = %s"
-        #     DatabaseConnection.execute_query("sales", query, params)
-
-        # params = (customer.first_name, customer.last_name, customer.phone, customer.email, customer.street, customer.city, customer.state, customer.zip_code, customer_id)
-        # query = "UPDATE customers SET first_name=%s, last_name=%s, phone=%s, email=%s, street=%s, city=%s, state=%s, zip_code=%s WHERE customer_id = %s"
-        # DatabaseConnection.execute_query("sales", query, params)
-
-        # return jsonify({"mensaje": "Customer modificado"}), 200
-
+        
 #Ejercicio 1.5
     @classmethod
     def delete_customer(cls, customer_id):

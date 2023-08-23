@@ -50,8 +50,29 @@ class Product:
                 query += " AND B.category_id = %s"            
         if category_filter and (category_filter not in params):
             params += (category_filter,)
-            query += "WHERE B.category_id = %s"
-            
+            query += "WHERE B.category_id = %s"            
         result = DatabaseConnection.fetch_all('production', query, params)
-        return result
+        if result:
+            products = []
+            for i in result:
+                product = {
+                    "brand": {
+                        "brand_id": i[0],
+                        "brand_name": i[1]
+                    },
+                    "category": {
+                        "category_id": i[2],
+                        "category_name": i[3]
+                    },
+                    "list_price": i[4],
+                    "model_year": i[5],
+                    "product_id": i[6],
+                    "product_name": i[7]
+                }
+                products.append(product)
+            total = len(products)
+            return jsonify({"Products": products, "Total": total}), 200
+        else:
+            return jsonify({"error": "Products not found"}), 404
+        
         
