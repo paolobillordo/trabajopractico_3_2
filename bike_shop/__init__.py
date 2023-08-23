@@ -11,7 +11,7 @@ def init_app():
 
     @app.route('/')
     def home():
-        return "BIKESHOP"
+        return "BIKESHOP GRUPO DE PRUEBA"
     
     
     return app

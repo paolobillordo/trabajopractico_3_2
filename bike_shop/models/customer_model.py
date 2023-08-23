@@ -12,10 +12,7 @@ class Customers:
         self.state = state
         self.zip_code = zip_code
 
-    def __repr__(self):
-        return str(self.__dict__)
-
-
+   
 #Ejercicio 1.1
     @classmethod
     def show_customer(cls, customer_id):

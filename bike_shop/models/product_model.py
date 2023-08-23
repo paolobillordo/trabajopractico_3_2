@@ -3,6 +3,14 @@ from flask import jsonify
 
 class Product:
 
+    def __init__(self, product_id = None, brand_id = None, category_id = None, list_price = None, model_year = None, product_name = None):
+        self.brand_id = brand_id       
+        self.category_id = category_id        
+        self.list_price = list_price
+        self.model_year = model_year        
+        self.product_name = product_name
+        self.product_id = product_id
+
 #Ejercicio 2.1
     @classmethod
     def show_product(cls, product_id):
@@ -47,7 +55,7 @@ class Product:
             query += "WHERE A.brand_id = %s"
             if category_filter:
                 params += (category_filter,)
-                query += " AND B.category_id = %s"            
+                query += " AND B.category_id = %s"
         if category_filter and (category_filter not in params):
             params += (category_filter,)
             query += "WHERE B.category_id = %s"            
@@ -75,4 +83,10 @@ class Product:
         else:
             return jsonify({"error": "Products not found"}), 404
         
-        
+#Ejercicio 2.3
+    @classmethod
+    def create_product(cls, product):
+        params = (product.product_name, product.brand_id, product.category_id, product.model_year, product.list_price)
+        query = "INSERT INTO products (product_name, brand_id, category_id, model_year, list_price) VALUES (%s,%s,%s,%s,%s)"
+        DatabaseConnection.execute_query('production', query, params)
+        return jsonify({'mensaje': 'Producto creado con éxito'}), 201
