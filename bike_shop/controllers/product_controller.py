@@ -22,23 +22,23 @@ class ProductController:
     def create_product(cls):
         product = Product(            
             product_name = request.args.get('product_name', ''),
-            brand_id = int(request.args.get('brand_id', '')),
-            category_id = int(request.args.get('category_id', '')),
-            model_year = int(request.args.get('model_year', '')),
-            list_price = float(request.args.get('list_price', ''))
+            brand_id = request.args.get('brand_id', ''),
+            category_id = request.args.get('category_id', ''),
+            model_year = request.args.get('model_year', ''),
+            list_price = request.args.get('list_price', '')
         )                
         return Product.create_product(product)
     
 #Ejercicio 2.4
     @classmethod
     def update_product(cls, product_id):
-        product = Product( 
+        product = Product(
             product_id = request.args.get('product_id', ''),           
             product_name = request.args.get('product_name', ''),
-            brand_id = int(request.args.get('brand_id', '0')),
-            category_id = int(request.args.get('category_id', '0')),
-            model_year = int(request.args.get('model_year', '0')),
-            list_price = float(request.args.get('list_price', '0'))
+            brand_id = request.args.get('brand_id', ''),
+            category_id = request.args.get('category_id', ''),
+            model_year = request.args.get('model_year', ''),
+            list_price = request.args.get('list_price', '')
         )                
         return Product.update_product(product_id, product)
     

@@ -98,7 +98,7 @@ class Product:
         campos = []
         params = []
         for clave in dict:                                        
-            if dict[clave] != "" and dict[clave] != 0:
+            if dict[clave] != "":
                 params.append(dict[clave])
                 campos.append(clave + " = %s")
         campos_str = ", ".join(campos)
