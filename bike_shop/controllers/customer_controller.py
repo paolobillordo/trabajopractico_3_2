@@ -20,6 +20,9 @@ class CustomersController:
 #Ejercicio 1.3
     @classmethod
     def create_customer(cls):
+        if request.is_json:
+            customer = request.json
+            return Customers.creat_customer(customer)
         customer = Customers(
             customer_id = request.args.get('customer_id',''),
             first_name = request.args.get('first_name',''),
@@ -30,12 +33,15 @@ class CustomersController:
             city = request.args.get('city',''),
             state = request.args.get('state',''),
             zip_code = request.args.get('zip_code',''),
-            )
+            ).__dict__
         return Customers.creat_customer(customer)
 
 #Ejercicio 1.4
     @classmethod
     def update_customer(cls, customer_id):
+        if request.is_json:
+            customer = request.json
+            return Customers.update_customer(customer_id, customer)
         customer = Customers(
             customer_id = request.args.get('customer_id',''),
             first_name = request.args.get('first_name',''),
@@ -46,8 +52,7 @@ class CustomersController:
             city = request.args.get('city',''),
             state = request.args.get('state',''),
             zip_code = request.args.get('zip_code',''),
-            )
-                
+            ).__dict__                
         return Customers.update_customer(customer_id, customer)
 
 #Ejercicio 1.5

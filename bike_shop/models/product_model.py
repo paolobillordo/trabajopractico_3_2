@@ -86,20 +86,19 @@ class Product:
 #Ejercicio 2.3
     @classmethod
     def create_product(cls, product):
-        params = (product.product_name, product.brand_id, product.category_id, product.model_year, product.list_price)
+        params = (product["product_name"], product["brand_id"], product["category_id"], product["model_year"], product["list_price"])
         query = "INSERT INTO products (product_name, brand_id, category_id, model_year, list_price) VALUES (%s,%s,%s,%s,%s)"
         DatabaseConnection.execute_query('production', query, params)
         return jsonify({'mensaje': 'Producto creado con éxito'}), 201
     
 #Ejercicio 2.4
     @classmethod
-    def update_product(cls, product_id, product):
-        dict = product.__dict__
+    def update_product(cls, product_id, product):        
         campos = []
         params = []
-        for clave in dict:                                        
-            if dict[clave] != "":
-                params.append(dict[clave])
+        for clave in product:                                        
+            if product[clave] != "":
+                params.append(product[clave])
                 campos.append(clave + " = %s")
         campos_str = ", ".join(campos)
         params.append(product_id)                

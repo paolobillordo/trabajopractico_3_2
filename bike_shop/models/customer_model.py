@@ -46,21 +46,31 @@ class Customers:
 #Ejercicio 1.3
     @classmethod
     def creat_customer(cls, customer):
-        params = (customer.first_name, customer.last_name, customer.phone, customer.email, customer.street, customer.city, customer.state, customer.zip_code)
-        query = "INSERT INTO customers (first_name, last_name, phone, email, street, city, state, zip_code) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-        DatabaseConnection.execute_query("sales", query, params)
-        
-        return jsonify({"mensaje": "Customer creado"}), 201
+        campos = []
+        params = []
+        values = []
+        for clave in customer:                                        
+            if customer[clave] != "":
+                params.append(customer[clave])
+                campos.append(clave)
+                values.append("%s")
+        campos_str = ", ".join(campos)
+        values_str = ", ".join(values)
+        query = f"INSERT INTO customers ({campos_str}) VALUES ({values_str})"
+        if campos:
+            DatabaseConnection.execute_query("sales", query, params)
+            return jsonify({"mensaje": "Customer creado"}), 201
+        return jsonify({"mensaje": "Faltan campos"}), 400
+                
     
 #Ejercicio 1.4
     @classmethod
     def update_customer(cls, customer_id, customer):        
-        dict = customer.__dict__
         campos = []
         params = []
-        for clave in dict:                                        
-            if dict[clave] != "":
-                params.append(dict[clave])
+        for clave in customer:                                        
+            if customer[clave] != "":
+                params.append(customer[clave])
                 campos.append(clave + " = %s")
         campos_str = ", ".join(campos)
         params.append(customer_id)                

@@ -20,18 +20,24 @@ class ProductController:
 #Ejercicio 2.3
     @classmethod
     def create_product(cls):
+        if request.is_json:
+            product = request.json
+            return Product.create_product(product)
         product = Product(            
             product_name = request.args.get('product_name', ''),
             brand_id = request.args.get('brand_id', ''),
             category_id = request.args.get('category_id', ''),
             model_year = request.args.get('model_year', ''),
             list_price = request.args.get('list_price', '')
-        )                
+        ).__dict__               
         return Product.create_product(product)
     
 #Ejercicio 2.4
     @classmethod
     def update_product(cls, product_id):
+        if request.is_json:
+            product = request.json
+            return Product.update_product(product_id, product)
         product = Product(
             product_id = request.args.get('product_id', ''),           
             product_name = request.args.get('product_name', ''),
@@ -39,7 +45,7 @@ class ProductController:
             category_id = request.args.get('category_id', ''),
             model_year = request.args.get('model_year', ''),
             list_price = request.args.get('list_price', '')
-        )                
+        ).__dict__                
         return Product.update_product(product_id, product)
     
 #Ejercicio 2.5
