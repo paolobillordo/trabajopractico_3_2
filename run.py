@@ -3,9 +3,8 @@ from bike_shop import init_app
 app = init_app()
 if __name__== "__main__":
     app.run()
-# Cristian se la come
-# Ale too
 
-# Ale too
+a= [1,2,3,4,5]
+for i in a:
+    print(i)
 
-# Ale too
